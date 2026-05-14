@@ -37,51 +37,54 @@ def clean_text(text):
 
     return " ".join(words)
 
+
 # Rule-based suspicious keyword detection
 def suspicious_keywords(text):
 
     keywords = [
 
-    "easy money",
-    "earn money fast",
-    "no experience needed",
-    "instant joining",
-    "immediate joining",
-    "quick earning",
-    "limited vacancies",
-    "direct offer letter",
-    "free laptop",
-    "welcome kit",
-    "high stipend",
-    "high paying",
-    "work from home and earn",
-    "guaranteed job",
-    "earn daily",
-    "no interview",
-    "huge salary",
-    "apply immediately",
-    "ppo up to",
-    "remote internship",
-    "remote opportunity",
-    "earn from home",
-    "no skills required",
-    "urgent hiring",
-    "work only few hours",
-    "direct joining",
-    "telegram",
-    "whatsapp",
-    "training fee",
-    "freshers can apply"
-]
+        "easy money",
+        "earn money fast",
+        "no experience needed",
+        "instant joining",
+        "immediate joining",
+        "quick earning",
+        "limited vacancies",
+        "direct offer letter",
+        "free laptop",
+        "welcome kit",
+        "high stipend",
+        "high paying",
+        "work from home and earn",
+        "guaranteed job",
+        "earn daily",
+        "no interview",
+        "huge salary",
+        "apply immediately",
+        "ppo up to",
+        "remote internship",
+        "remote opportunity",
+        "earn from home",
+        "no skills required",
+        "urgent hiring",
+        "work only few hours",
+        "direct joining",
+        "telegram",
+        "whatsapp",
+        "training fee"
+    ]
 
     text = text.lower()
+
+    count = 0
 
     for word in keywords:
 
         if word in text:
-            return True
+            count += 1
 
-    return False
+    return count
+
 
 # Streamlit page config
 st.set_page_config(
@@ -174,6 +177,7 @@ with col2:
 
     # function = st.text_input("Function")
 
+
 # Default empty values for commented fields
 benefits = ""
 telecommuting = ""
@@ -181,6 +185,7 @@ has_company_logo = ""
 has_questions = ""
 industry = ""
 function = ""
+
 
 # Prediction button
 if st.button("Submit"):
@@ -214,17 +219,27 @@ if st.button("Submit"):
     # ML prediction
     prediction = model.predict(vector_input)
 
-    # Rule-based prediction
-    rule_based = suspicious_keywords(full_text)
+    # Rule-based suspicious score
+    suspicious_score = suspicious_keywords(full_text)
 
-    # Final result
-    if prediction[0] == 0 or rule_based:
+    # Debugging (optional)
+    st.write("Model Prediction:", prediction[0])
+    st.write("Suspicious Score:", suspicious_score)
+
+    # Final Result
+    # IMPORTANT:
+    # Model label mapping:
+    # 0 = Fake
+    # 1 = Real
+
+    if prediction[0] == 0 and suspicious_score >= 2:
 
         st.error("😡 Fake Job Posting Detected")
 
-
     else:
 
-        st.success("😁 This is Real Job! ")
+        st.success("😁 This is Real Job!")
 
-      
+        st.info(
+            "This job appears to be genuine based on the model analysis."
+        )
