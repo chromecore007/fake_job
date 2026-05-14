@@ -6,6 +6,8 @@ import nltk
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 # Load model and vectorizer
 model = pickle.load(open('fake_job_model.pkl', 'rb'))
