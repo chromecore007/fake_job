@@ -42,30 +42,37 @@ def suspicious_keywords(text):
 
     keywords = [
 
-        "easy money",
-        "earn money fast",
-        "no experience needed",
-        "instant joining",
-        "quick earning",
-        "limited vacancies",
-        "direct offer letter",
-        "free laptop",
-        "welcome kit",
-        "high stipend",
-        "work from home and earn",
-        "guaranteed job",
-        "earn daily",
-        "no interview",
-        "huge salary",
-        "apply immediately",
-        "ppo up to",
-        "remote internship",
-        "earn from home",
-        "no skills required",
-        "urgent hiring",
-        "work only few hours",
-        "direct joining"
-    ]
+    "easy money",
+    "earn money fast",
+    "no experience needed",
+    "instant joining",
+    "immediate joining",
+    "quick earning",
+    "limited vacancies",
+    "direct offer letter",
+    "free laptop",
+    "welcome kit",
+    "high stipend",
+    "high paying",
+    "work from home and earn",
+    "guaranteed job",
+    "earn daily",
+    "no interview",
+    "huge salary",
+    "apply immediately",
+    "ppo up to",
+    "remote internship",
+    "remote opportunity",
+    "earn from home",
+    "no skills required",
+    "urgent hiring",
+    "work only few hours",
+    "direct joining",
+    "telegram",
+    "whatsapp",
+    "training fee",
+    "freshers can apply"
+]
 
     text = text.lower()
 
@@ -211,7 +218,7 @@ if st.button("Submit"):
     rule_based = suspicious_keywords(full_text)
 
     # Final result
-    if prediction[0] == 1 or rule_based:
+    if prediction[0] == 0 or rule_based:
 
         st.error("😡 Fake Job Posting Detected")
 
@@ -220,6 +227,4 @@ if st.button("Submit"):
 
         st.success("😁 This is Real Job! ")
 
-        st.info(
-            "This job appears to be genuine based on the model analysis."
-        )
+      
