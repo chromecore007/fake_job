@@ -167,6 +167,14 @@ with col2:
 
     # function = st.text_input("Function")
 
+# Default empty values for commented fields
+benefits = ""
+telecommuting = ""
+has_company_logo = ""
+has_questions = ""
+industry = ""
+function = ""
+
 # Prediction button
 if st.button("Submit"):
 
