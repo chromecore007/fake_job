@@ -140,7 +140,7 @@ with col1:
         "Required Experience"
     )
 
-    industry = st.text_input("Industry")
+    # industry = st.text_input("Industry")
 
 with col2:
 
@@ -150,7 +150,7 @@ with col2:
 
     description = st.text_area("Description")
 
-    benefits = st.text_area("Benefits")
+    # benefits = st.text_area("Benefits")
 
     # has_company_logo = st.selectbox(
     #     "Has Company Logo",
