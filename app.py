@@ -1,25 +1,24 @@
 import streamlit as st
 import pickle
-import pandas as pd
 import re
 import nltk
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+
+# Download NLTK data
 nltk.download('stopwords')
 nltk.download('wordnet')
 
 # Load model and vectorizer
 model = pickle.load(open('fake_job_model.pkl', 'rb'))
-
 tfidf = pickle.load(open('tfidf_vectorizer.pkl', 'rb'))
 
 # NLP setup
 stop_words = set(stopwords.words('english'))
-
 lemmatizer = WordNetLemmatizer()
 
-# Clean text function
+# Text cleaning function
 def clean_text(text):
 
     text = text.lower()
@@ -38,7 +37,46 @@ def clean_text(text):
 
     return " ".join(words)
 
-# Page config
+# Rule-based suspicious keyword detection
+def suspicious_keywords(text):
+
+    keywords = [
+
+        "easy money",
+        "earn money fast",
+        "no experience needed",
+        "instant joining",
+        "quick earning",
+        "limited vacancies",
+        "direct offer letter",
+        "free laptop",
+        "welcome kit",
+        "high stipend",
+        "work from home and earn",
+        "guaranteed job",
+        "earn daily",
+        "no interview",
+        "huge salary",
+        "apply immediately",
+        "ppo up to",
+        "remote internship",
+        "earn from home",
+        "no skills required",
+        "urgent hiring",
+        "work only few hours",
+        "direct joining"
+    ]
+
+    text = text.lower()
+
+    for word in keywords:
+
+        if word in text:
+            return True
+
+    return False
+
+# Streamlit page config
 st.set_page_config(
     page_title="Fake Job Predictor",
     page_icon="💼",
@@ -71,13 +109,11 @@ h1 {
 """, unsafe_allow_html=True)
 
 # Title
-st.title("Fake Job Predictor")
+st.title("💼 Fake Job Detection System")
 
-st.write(
-    "Enter Job Description Details"
-)
+st.write("Enter Job Description Details")
 
-# Create 2 columns
+# Create two columns
 col1, col2 = st.columns(2)
 
 with col1:
@@ -131,10 +167,10 @@ with col2:
 
     function = st.text_input("Function")
 
-# Submit button
+# Prediction button
 if st.button("Submit"):
 
-    # Combine all text
+    # Combine all fields
     full_text = (
         str(title) + " " +
         str(location) + " " +
@@ -160,14 +196,25 @@ if st.button("Submit"):
     # TF-IDF transform
     vector_input = tfidf.transform([cleaned_text])
 
-    # Prediction
+    # ML prediction
     prediction = model.predict(vector_input)
 
-    # Result
-    if prediction[0] == 1:
+    # Rule-based prediction
+    rule_based = suspicious_keywords(full_text)
 
-        st.error("🚨 Fake Job Posting")
+    # Final result
+    if prediction[0] == 1 or rule_based:
+
+        st.error("🚨 Fake Job Posting Detected")
+
+        st.warning(
+            "This job contains suspicious patterns often found in fraudulent postings."
+        )
 
     else:
 
         st.success("✅ Real Job Posting")
+
+        st.info(
+            "This job appears to be genuine based on the model analysis."
+        )
