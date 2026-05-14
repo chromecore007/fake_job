@@ -109,7 +109,7 @@ h1 {
 """, unsafe_allow_html=True)
 
 # Title
-st.title("💼 Fake Job Detection System")
+st.title("🏢 Fake Job Detection System")
 
 st.write("Enter Job Description Details")
 
@@ -205,15 +205,12 @@ if st.button("Submit"):
     # Final result
     if prediction[0] == 1 or rule_based:
 
-        st.error("🚨 Fake Job Posting Detected")
+        st.error("😡 Fake Job Posting Detected")
 
-        st.warning(
-            "This job contains suspicious patterns often found in fraudulent postings."
-        )
 
     else:
 
-        st.success("✅ Real Job Posting")
+        st.success("😁 This is Real Job! ")
 
         st.info(
             "This job appears to be genuine based on the model analysis."
