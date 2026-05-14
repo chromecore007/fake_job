@@ -126,15 +126,15 @@ with col1:
 
     requirements = st.text_area("Requirements")
 
-    telecommuting = st.selectbox(
-        "Telecommuting",
-        ["Yes", "No"]
-    )
+    # telecommuting = st.selectbox(
+    #     "Telecommuting",
+    #     ["Yes", "No"]
+    # )
 
-    has_questions = st.selectbox(
-        "Has Questions",
-        ["Yes", "No"]
-    )
+    # has_questions = st.selectbox(
+    #     "Has Questions",
+    #     ["Yes", "No"]
+    # )
 
     required_experience = st.text_input(
         "Required Experience"
@@ -152,10 +152,10 @@ with col2:
 
     benefits = st.text_area("Benefits")
 
-    has_company_logo = st.selectbox(
-        "Has Company Logo",
-        ["Yes", "No"]
-    )
+    # has_company_logo = st.selectbox(
+    #     "Has Company Logo",
+    #     ["Yes", "No"]
+    # )
 
     employment_type = st.text_input(
         "Employment Type"
@@ -165,7 +165,7 @@ with col2:
         "Required Education"
     )
 
-    function = st.text_input("Function")
+    # function = st.text_input("Function")
 
 # Prediction button
 if st.button("Submit"):
